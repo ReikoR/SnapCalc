@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Class-Path: jcl-over-slf4j.jar ncsa-hdf-lib-hdf.jar net-java-html-soun
+ d.jar org-esa-snap-snap-ui.jar org-esa-snap-ceres-ui.jar org-esa-snap
+ -snap-dem.jar org-esa-snap-snap-gpf.jar org-esa-snap-snap-rcp.jar org
+ -esa-snap-snap-sta.jar org-esa-snap-ceres-jai.jar org-esa-snap-snap-c
+ ore.jar org-esa-snap-snap-help.jar org-esa-snap-snap-ndvi.jar org-esa
+ -snap-ceres-core.jar org-esa-snap-snap-tango.jar org-esa-snap-snap-un
+ mix.jar org-esa-snap-ceres-binio.jar org-esa-snap-snap-dem-ui.jar org
+ -esa-snap-snap-gpf-ui.jar org-esa-snap-snap-jython.jar org-esa-snap-s
+ nap-netcdf.jar org-esa-snap-snap-python.jar org-esa-snap-snap-raster.
+ jar org-esa-snap-snap-sta-ui.jar net-java-html-boot-script.jar org-es
+ a-snap-ceres-glayer.jar org-esa-snap-snap-bigtiff.jar org-esa-snap-sn
+ ap-binning.jar org-esa-snap-snap-geotiff.jar org-esa-snap-ceres-bindi
+ ng.jar org-esa-snap-netbeans-tile.jar org-esa-snap-snap-branding.jar 
+ org-esa-snap-snap-pconvert.jar org-esa-snap-snap-unmix-ui.jar org-esa
+ -snap-ceres-metadata.jar org-esa-snap-snap-raster-ui.jar org-esa-snap
+ -snap-watermask.jar org-esa-snap-snap-worldwind.jar org-esa-snap-netb
+ eans-docwin.jar org-esa-snap-snap-binning-ui.jar org-esa-snap-snap-cs
+ v-dataio.jar org-esa-snap-snap-engine-kit.jar org-esa-snap-snap-land-
+ cover.jar org-esa-snap-snap-pgx-reader.jar org-esa-snap-snap-statisti
+ cs.jar org-esa-snap-snap-collocation.jar org-esa-snap-snap-envi-reade
+ r.jar org-esa-snap-snap-hdf5-writer.jar org-esa-snap-snap-watermask-u
+ i.jar org-esa-snap-globcover-worldmap.jar org-esa-snap-snap-getasse30
+ -dem.jar org-esa-snap-snap-graph-builder.jar org-esa-snap-snap-land-c
+ over-ui.jar org-esa-snap-snap-classification.jar org-esa-snap-snap-co
+ llocation-ui.jar org-esa-snap-snap-envisat-reader.jar org-esa-snap-bl
+ ue-marble-worldmap.jar org-esa-snap-snap-product-library.jar org-esa-
+ snap-snap-cluster-analysis.jar org-esa-snap-snap-engine-utilities.jar
+  org-esa-snap-snap-pixel-extraction.jar org-esa-snap-snap-arcbingrid-
+ reader.jar org-esa-snap-snap-classification-ui.jar org-esa-snap-snap-
+ smart-configurator.jar org-esa-snap-snap-pixel-extraction-ui.jar org-
+ esa-snap-snap-temporal-percentile.jar org-esa-snap-snap-smart-configu
+ rator-ui.jar snap-main.jar snap-runtime.jar gt-api.jar gt-cql.jar gt-
+ wms.jar gt-xml.jar gt-data.jar gt-main.jar gt-graph.jar gt-render.jar
+  gt-geotiff.jar gt-opengis.jar gt-coverage.jar gt-metadata.jar gt-eps
+ g-hsql.jar gt-shapefile.jar gt-referencing.jar jdom.jar jai-core.jar 
+ jai-codec.jar mlibwrapper-jai.jar jsr-275.jar jts.jar vecmath.jar xst
+ ream.jar hsqldb.jar commons-math3.jar commons-math3.jar nujan.jar net
+ cdf.jar udunits.jar
+Main-Class: SnapCalc
+
