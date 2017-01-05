@@ -22,26 +22,27 @@ public class SnapCalculator {
 
             System.out.println(productType);
 
-            //ProductIO.readProduct()
-
-            int rasterWidth = product.getSceneRasterWidth();
-            int rasterHeight = product.getSceneRasterHeight();
-
-            //Product targetProduct = product;
-            //Product targetProduct = new Product(new File(filePath + "_test.dim").getName(), "MER_FR__2P", rasterWidth, rasterHeight);
-
-            ProductWriter productWriter = ProductIO.getProductWriter("BEAM-DIMAP");
-            //ProductReader productReader = ProductIO.getProductReaderForInput(filePath);
-            //targetProduct.setProductWriter(productWriter);
-            //product.setProductReader(productReader);
-            product.setProductWriter(productWriter);
-            //productWriter.flush();
-
-            productWriter.writeProductNodes(product, "out/" + filePath);
-
-            //System.out.println(productWriter.getOutput());
-
             if (productType.matches("org.esa.s3tbx.c2rcc.olci.C2rccOlciOperator")) {
+
+                //ProductIO.readProduct()
+
+                int rasterWidth = product.getSceneRasterWidth();
+                int rasterHeight = product.getSceneRasterHeight();
+
+                //Product targetProduct = product;
+                //Product targetProduct = new Product(new File(filePath + "_test.dim").getName(), "MER_FR__2P", rasterWidth, rasterHeight);
+
+                ProductWriter productWriter = ProductIO.getProductWriter("BEAM-DIMAP");
+                //ProductReader productReader = ProductIO.getProductReaderForInput(filePath);
+                //targetProduct.setProductWriter(productWriter);
+                //product.setProductReader(productReader);
+                product.setProductWriter(productWriter);
+                //productWriter.flush();
+
+                productWriter.writeProductNodes(product, "out/" + filePath);
+
+                //System.out.println(productWriter.getOutput());
+
                 /*Band[] bands = product.getBands();
 
                 for (int i = 0; i < bands.length; i++) {
@@ -178,7 +179,7 @@ public class SnapCalculator {
                 product.addBand(chlBinding);
                 product.addBand(aTot);
 
-                productWriter.writeProductNodes(product, "out/" + filePath + ".dim");
+                productWriter.writeProductNodes(product, "out/" + filePath);
 
                 //ProductUtils.copyTiePointGrids(product, targetProduct);
                 //ProductUtils.copyGeoCoding(product, targetProduct);
