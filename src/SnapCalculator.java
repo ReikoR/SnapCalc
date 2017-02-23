@@ -365,7 +365,7 @@ public class SnapCalculator {
                             };
 
                             for (int p = 0; p < reflPixels.length; p++) {
-                                photopocReflectance += constants[0] * reflPixels[p];
+                                photopocReflectance += constants[p] * reflPixels[p];
                             }
 
                             photopocReflectance /= constantSum;
