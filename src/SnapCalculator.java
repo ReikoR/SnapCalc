@@ -91,7 +91,8 @@ public class SnapCalculator {
                     System.out.println(maskNames[i]);
                 }*/
 
-                Mask LandMask = product.getMaskGroup().get("quality_flags_land");
+                Mask landMask = product.getMaskGroup().get("quality_flags_land");
+                Mask freshInlandWaterMask = product.getMaskGroup().get("quality_flags_fresh_inland_water");
                 //Mask bpacOnMask = product.getMaskGroup().get("bpac_on");
                 //Mask uncertainAerosolModelMask = product.getMaskGroup().get("uncertain_aerosol_model");
 
@@ -99,7 +100,8 @@ public class SnapCalculator {
                 System.out.println(product.getMaskGroup().getNodeDisplayNames()[i]);
             }*/
 
-                Raster landMaskData = LandMask.getSourceImage().getData();
+                Raster landMaskData = landMask.getSourceImage().getData();
+                Raster freshInlandWaterMaskData = freshInlandWaterMask.getSourceImage().getData();
                 //Raster bpacOnMaskData = bpacOnMask.getSourceImage().getData();
                 //Raster uncertainAerosolModelMaskData = uncertainAerosolModelMask.getSourceImage().getData();
 
@@ -271,10 +273,12 @@ public class SnapCalculator {
                     double[] aTotRow = new double[rasterWidth];
 
                     double[] landMaskRow = new double[rasterWidth];
+                    double[] freshInlandWaterMaskRow = new double[rasterWidth];
                     //double[] bpacOnMaskRow = new double[rasterWidth];
                     //double[] uncertainAerosolModelMaskRow = new double[rasterWidth];
 
                     landMaskData.getPixels(0, y, rasterWidth, 1, landMaskRow);
+                    freshInlandWaterMaskData.getPixels(0, y, rasterWidth, 1, freshInlandWaterMaskRow);
                     //bpacOnMaskData.getPixels(0, y, rasterWidth, 1, bpacOnMaskRow);
                     //uncertainAerosolModelMaskData.getPixels(0, y, rasterWidth, 1, uncertainAerosolModelMaskRow);
 
@@ -320,7 +324,7 @@ public class SnapCalculator {
                         //System.out.println(waterMaskRow[x] + " " + bpacOnMaskRow[x] + " " + uncertainAerosolModelMaskRow[x]);
                         //System.out.println(landMaskRow[x]);
                         //if (waterMaskRow[x] > 0.0 && bpacOnMaskRow[x] > 0.0 && uncertainAerosolModelMaskRow[x] == 0.0) {
-                        if (landMaskRow[x] < 255.0) {
+                        if (landMaskRow[x] < 255.0 || freshInlandWaterMaskRow[x] > 0.0) {
                             rhow1Pixel = rhow1Band.scale(pixel1row[x]);
                             rhow2Pixel = rhow2Band.scale(pixel2row[x]);
                             rhow3Pixel = rhow3Band.scale(pixel3row[x]);
