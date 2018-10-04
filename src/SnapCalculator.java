@@ -22,8 +22,11 @@ public class SnapCalculator {
 
             System.out.println(productType);
 
-            if (productType.matches("org.esa.s3tbx.c2rcc.olci.C2rccOlciOperator")) {
+            boolean isOlci = productType.matches("org.esa.s3tbx.c2rcc.olci.C2rccOlciOperator");
+            boolean isMeris = productType.matches("org.esa.s3tbx.c2rcc.meris.C2rccMerisOperator");
 
+
+            if (isOlci || isMeris) {
                 //ProductIO.readProduct()
 
                 int rasterWidth = product.getSceneRasterWidth();
@@ -52,34 +55,67 @@ public class SnapCalculator {
 
                 //String[] bandNames = product.getBandNames();
 
-                Band rhow1Band = product.getBand("rhow_1");
-                Band rhow2Band = product.getBand("rhow_2");
-                Band rhow3Band = product.getBand("rhow_3");
-                Band rhow4Band = product.getBand("rhow_4");
-                Band rhow5Band = product.getBand("rhow_5");
-                Band rhow6Band = product.getBand("rhow_6");
-                Band rhow7Band = product.getBand("rhow_7");
-                Band rhow8Band = product.getBand("rhow_8");
-                Band rhow9Band = product.getBand("rhow_9");
-                Band rhow10Band = product.getBand("rhow_10");
-                Band rhow11Band = product.getBand("rhow_11");
-                Band rhow12Band = product.getBand("rhow_12");
+                Band r400Band = null;
+                Band r412Band = null;
+                Band r442Band = null;
+                Band r490Band = null;
+                Band r510Band = null;
+                Band r560Band = null;
+                Band r620Band = null;
+                Band r665Band = null;
+                Band r673Band = null;
+                Band r681Band = null;
+                Band r708Band = null;
+                Band r753Band = null;
+
+                if (isOlci) {
+                    r400Band = product.getBand("rhow_1");
+                    r412Band = product.getBand("rhow_2");
+                    r442Band = product.getBand("rhow_3");
+                    r490Band = product.getBand("rhow_4");
+                    r510Band = product.getBand("rhow_5");
+                    r560Band = product.getBand("rhow_6");
+                    r620Band = product.getBand("rhow_7");
+                    r665Band = product.getBand("rhow_8");
+                    r673Band = product.getBand("rhow_9");
+                    r681Band = product.getBand("rhow_10");
+                    r708Band = product.getBand("rhow_11");
+                    r753Band = product.getBand("rhow_12");
+                    //r778Band = product.getBand("rhow_16");
+                    //r865Band = product.getBand("rhow_17");
+                    //r885Band = product.getBand("rhow_18");
+                    //r1020Band = product.getBand("rhow_21");
+                } else if (isMeris) {
+                    r412Band = product.getBand("rhow_1");
+                    r442Band = product.getBand("rhow_2");
+                    r490Band = product.getBand("rhow_3");
+                    r510Band = product.getBand("rhow_4");
+                    r560Band = product.getBand("rhow_5");
+                    r620Band = product.getBand("rhow_6");
+                    r665Band = product.getBand("rhow_7");
+                    r681Band = product.getBand("rhow_8");
+                    r708Band = product.getBand("rhow_9");
+                    r753Band = product.getBand("rhow_10");
+                    //r778Band = product.getBand("rhow_12");
+                    //r865Band = product.getBand("rhow_13");
+                }
+
                 Band algal2Band = product.getBand("conc_chl");
                 Band yellowSubsBand = product.getBand("iop_adg");
                 Band totalSuspBand = product.getBand("conc_tsm");
                 //Band l2Flags = product.getBand("l2_flags");
-                Raster rhow1 = rhow1Band.getSourceImage().getData();
-                Raster rhow2 = rhow2Band.getSourceImage().getData();
-                Raster rhow3 = rhow3Band.getSourceImage().getData();
-                Raster rhow4 = rhow4Band.getSourceImage().getData();
-                Raster rhow5 = rhow5Band.getSourceImage().getData();
-                Raster rhow6 = rhow6Band.getSourceImage().getData();
-                Raster rhow7 = rhow7Band.getSourceImage().getData();
-                Raster rhow8 = rhow8Band.getSourceImage().getData();
-                Raster rhow9 = rhow9Band.getSourceImage().getData();
-                Raster rhow10 = rhow10Band.getSourceImage().getData();
-                Raster rhow11 = rhow11Band.getSourceImage().getData();
-                Raster rhow12 = rhow12Band.getSourceImage().getData();
+                Raster r400 = isOlci ? r400Band.getSourceImage().getData() : null;
+                Raster r412 = r412Band.getSourceImage().getData();
+                Raster r442 = r442Band.getSourceImage().getData();
+                Raster r490 = r490Band.getSourceImage().getData();
+                Raster r510 = r510Band.getSourceImage().getData();
+                Raster r560 = r560Band.getSourceImage().getData();
+                Raster r620 = r620Band.getSourceImage().getData();
+                Raster r665 = r665Band.getSourceImage().getData();
+                Raster r673 = isOlci ? r673Band.getSourceImage().getData(): null;
+                Raster r681 = r681Band.getSourceImage().getData();
+                Raster r708 = r708Band.getSourceImage().getData();
+                Raster r753 = r753Band.getSourceImage().getData();
                 Raster algal_2 = algal2Band.getSourceImage().getData();
                 Raster yellow_subs = yellowSubsBand.getSourceImage().getData();
                 Raster total_susp = totalSuspBand.getSourceImage().getData();
@@ -91,8 +127,9 @@ public class SnapCalculator {
                     System.out.println(maskNames[i]);
                 }*/
 
-                Mask landMask = product.getMaskGroup().get("quality_flags_land");
-                Mask freshInlandWaterMask = product.getMaskGroup().get("quality_flags_fresh_inland_water");
+                Mask landMask = isOlci ? product.getMaskGroup().get("quality_flags_land") :
+                        product.getMaskGroup().get("land");
+                Mask freshInlandWaterMask = isOlci ? product.getMaskGroup().get("quality_flags_fresh_inland_water") : null;
                 //Mask bpacOnMask = product.getMaskGroup().get("bpac_on");
                 //Mask uncertainAerosolModelMask = product.getMaskGroup().get("uncertain_aerosol_model");
 
@@ -101,7 +138,7 @@ public class SnapCalculator {
             }*/
 
                 Raster landMaskData = landMask.getSourceImage().getData();
-                Raster freshInlandWaterMaskData = freshInlandWaterMask.getSourceImage().getData();
+                Raster freshInlandWaterMaskData = isOlci ? freshInlandWaterMask.getSourceImage().getData() : null;
                 //Raster bpacOnMaskData = bpacOnMask.getSourceImage().getData();
                 //Raster uncertainAerosolModelMaskData = uncertainAerosolModelMask.getSourceImage().getData();
 
@@ -197,7 +234,9 @@ public class SnapCalculator {
                 //targetBand.writePixels(0, 0, targetBand.getSceneRasterWidth(), targetBand.getSceneRasterHeight(), product.getBand("l2_flags").getSourceImage().getData());
 
 
-                double[] constants = {0.0004, 0.0012, 0.023, 0.208, 0.503, 0.995, 0.381, 0.061, 0.032, 0.017, 0.0021, 0.0001};
+                double[] olciConstants = {0.0004, 0.0012, 0.023, 0.208, 0.503, 0.995, 0.381, 0.061, 0.032, 0.017, 0.0021, 0.0001};
+                double[] merisConstants = {0.0012, 0.023, 0.208, 0.503, 0.995, 0.381, 0.061, 0.017, 0.0021, 0.0001};
+                double[] constants = isOlci ? olciConstants : merisConstants;
                 double constantSum = 0;
 
                 for (int k = 0; k < constants.length; k++) {
@@ -210,39 +249,42 @@ public class SnapCalculator {
                         System.out.print(":");
                     }
 
-                    double[] pixel1row = new double[rasterWidth];
-                    double[] pixel2row = new double[rasterWidth];
-                    double[] pixel3row = new double[rasterWidth];
-                    double[] pixel4row = new double[rasterWidth];
-                    double[] pixel5row = new double[rasterWidth];
-                    double[] pixel6row = new double[rasterWidth];
-                    double[] pixel7row = new double[rasterWidth];
-                    double[] pixel8row = new double[rasterWidth];
-                    double[] pixel9row = new double[rasterWidth];
-                    double[] pixel10row = new double[rasterWidth];
-                    double[] pixel11row = new double[rasterWidth];
-                    double[] pixel12row = new double[rasterWidth];
+                    double[] r400row = new double[rasterWidth];
+                    double[] r412row = new double[rasterWidth];
+                    double[] r442row = new double[rasterWidth];
+                    double[] r490row = new double[rasterWidth];
+                    double[] r510row = new double[rasterWidth];
+                    double[] r560row = new double[rasterWidth];
+                    double[] r620row = new double[rasterWidth];
+                    double[] r665row = new double[rasterWidth];
+                    double[] r673row = new double[rasterWidth];
+                    double[] r681row = new double[rasterWidth];
+                    double[] r708row = new double[rasterWidth];
+                    double[] r753row = new double[rasterWidth];
                     double[] algal2row = new double[rasterWidth];
                     int[] yellowSubsRow = new int[rasterWidth];
                     double[] totalSuspRow = new double[rasterWidth];
 
-                    rhow1.getPixels(0, y, rasterWidth, 1, pixel1row);
-                    rhow2.getPixels(0, y, rasterWidth, 1, pixel2row);
-                    rhow3.getPixels(0, y, rasterWidth, 1, pixel3row);
-                    rhow4.getPixels(0, y, rasterWidth, 1, pixel4row);
-                    rhow5.getPixels(0, y, rasterWidth, 1, pixel5row);
-                    rhow6.getPixels(0, y, rasterWidth, 1, pixel6row);
-                    rhow7.getPixels(0, y, rasterWidth, 1, pixel7row);
-                    rhow8.getPixels(0, y, rasterWidth, 1, pixel8row);
-                    rhow9.getPixels(0, y, rasterWidth, 1, pixel9row);
-                    rhow10.getPixels(0, y, rasterWidth, 1, pixel10row);
-                    rhow11.getPixels(0, y, rasterWidth, 1, pixel11row);
-                    rhow12.getPixels(0, y, rasterWidth, 1, pixel12row);
+                    r412.getPixels(0, y, rasterWidth, 1, r412row);
+                    r442.getPixels(0, y, rasterWidth, 1, r442row);
+                    r490.getPixels(0, y, rasterWidth, 1, r490row);
+                    r510.getPixels(0, y, rasterWidth, 1, r510row);
+                    r560.getPixels(0, y, rasterWidth, 1, r560row);
+                    r620.getPixels(0, y, rasterWidth, 1, r620row);
+                    r665.getPixels(0, y, rasterWidth, 1, r665row);
+                    r681.getPixels(0, y, rasterWidth, 1, r681row);
+                    r708.getPixels(0, y, rasterWidth, 1, r708row);
+                    r753.getPixels(0, y, rasterWidth, 1, r753row);
                     algal_2.getPixels(0, y, rasterWidth, 1, algal2row);
                     yellow_subs.getPixels(0, y, rasterWidth, 1, yellowSubsRow);
                     total_susp.getPixels(0, y, rasterWidth, 1, totalSuspRow);
 
-                    //System.out.println("pixel3row " + pixel3row[0]);
+                    if (isOlci) {
+                        r400.getPixels(0, y, rasterWidth, 1, r400row);
+                        r673.getPixels(0, y, rasterWidth, 1, r673row);
+                    }
+
+                    //System.out.println("r442row " + r442row[0]);
 
                     double[] kd490row = new double[rasterWidth];
                     double[] CYrow = new double[rasterWidth];
@@ -278,25 +320,28 @@ public class SnapCalculator {
                     //double[] uncertainAerosolModelMaskRow = new double[rasterWidth];
 
                     landMaskData.getPixels(0, y, rasterWidth, 1, landMaskRow);
-                    freshInlandWaterMaskData.getPixels(0, y, rasterWidth, 1, freshInlandWaterMaskRow);
+
+                    if (isOlci) {
+                        freshInlandWaterMaskData.getPixels(0, y, rasterWidth, 1, freshInlandWaterMaskRow);
+                    }
+
                     //bpacOnMaskData.getPixels(0, y, rasterWidth, 1, bpacOnMaskRow);
                     //uncertainAerosolModelMaskData.getPixels(0, y, rasterWidth, 1, uncertainAerosolModelMaskRow);
 
                     for (int x = 0; x < rasterWidth/* && x < 20*/; x++) {
 
-                        double rhow1Pixel,
-                                rhow2Pixel,
-                                rhow3Pixel,
-                                rhow4Pixel,
-                                rhow5Pixel,
-                                rhow6Pixel,
-                                rhow7Pixel,
-                                rhow8Pixel,
-                                rhow9Pixel,
-                                rhow10Pixel,
-                                rhow11Pixel,
-                                rhow12Pixel,
-                                //rhow13Pixel,
+                        double r400Pixel,
+                                r412Pixel,
+                                r442Pixel,
+                                r490Pixel,
+                                r510Pixel,
+                                r560Pixel,
+                                r620Pixel,
+                                r665Pixel,
+                                r673Pixel,
+                                r681Pixel,
+                                r708Pixel,
+                                r753Pixel,
                                 algal2Pixel,
                                 yellowSubsPixel,
                                 totalSuspPixel;
@@ -325,48 +370,63 @@ public class SnapCalculator {
                         //System.out.println(landMaskRow[x]);
                         //if (waterMaskRow[x] > 0.0 && bpacOnMaskRow[x] > 0.0 && uncertainAerosolModelMaskRow[x] == 0.0) {
                         if (landMaskRow[x] < 255.0 || freshInlandWaterMaskRow[x] > 0.0) {
-                            rhow1Pixel = rhow1Band.scale(pixel1row[x]);
-                            rhow2Pixel = rhow2Band.scale(pixel2row[x]);
-                            rhow3Pixel = rhow3Band.scale(pixel3row[x]);
-                            rhow4Pixel = rhow4Band.scale(pixel4row[x]);
-                            rhow5Pixel = rhow5Band.scale(pixel5row[x]);
-                            rhow6Pixel = rhow6Band.scale(pixel6row[x]);
-                            rhow7Pixel = rhow7Band.scale(pixel7row[x]);
-                            rhow8Pixel = rhow8Band.scale(pixel8row[x]);
-                            rhow9Pixel = rhow9Band.scale(pixel9row[x]);
-                            rhow10Pixel = rhow10Band.scale(pixel10row[x]);
-                            rhow11Pixel = rhow11Band.scale(pixel11row[x]);
-                            rhow12Pixel = rhow12Band.scale(pixel12row[x]);
+                            r400Pixel = isOlci ? r400Band.scale(r400row[x]) : 0;
+                            r412Pixel = r412Band.scale(r412row[x]);
+                            r442Pixel = r442Band.scale(r442row[x]);
+                            r490Pixel = r490Band.scale(r490row[x]);
+                            r510Pixel = r510Band.scale(r510row[x]);
+                            r560Pixel = r560Band.scale(r560row[x]);
+                            r620Pixel = r620Band.scale(r620row[x]);
+                            r665Pixel = r665Band.scale(r665row[x]);
+                            r673Pixel = isOlci ? r673Band.scale(r673row[x]) : 0;
+                            r681Pixel = r681Band.scale(r681row[x]);
+                            r708Pixel = r708Band.scale(r708row[x]);
+                            r753Pixel = r753Band.scale(r753row[x]);
                             algal2Pixel = algal2Band.scale(algal2row[x]);
                             yellowSubsPixel = yellowSubsBand.scale(yellowSubsRow[x]);
                             totalSuspPixel = totalSuspBand.scale(totalSuspRow[x]);
 
-                            //System.out.println(pixel3row[x]);
+                            //System.out.println(r442row[x]);
 
-                            kd490row[x] = calcKd490(rhow4Pixel, rhow6Pixel, rhow11Pixel);
+                            kd490row[x] = calcKd490(r490Pixel, r560Pixel, r708Pixel);
                             aPigRow[x] = calcAPig(algal2Pixel);
                             c490row[x] = calcC490(algal2Pixel, yellowSubsPixel, totalSuspPixel);
-                            CYrow[x] = calcCY(rhow8Pixel, rhow10Pixel, rhow11Pixel);
-                            MCIrow[x] = calcMCI(rhow10Pixel, rhow11Pixel, rhow12Pixel);
+                            CYrow[x] = calcCY(r665Pixel, r681Pixel, r708Pixel);
+                            MCIrow[x] = calcMCI(r681Pixel, r708Pixel, r753Pixel);
                             secchiPhotRow[x] = calcSecchiPhot(c490row[x], kd490row[x]);
                             secchiBSrow[x] = calcSecchiBS(kd490row[x]);
 
                             double photopocReflectance = 0;
 
-                            double[] reflPixels = {
-                                    rhow1Pixel,
-                                    rhow2Pixel,
-                                    rhow3Pixel,
-                                    rhow4Pixel,
-                                    rhow5Pixel,
-                                    rhow6Pixel,
-                                    rhow7Pixel,
-                                    rhow8Pixel,
-                                    rhow9Pixel,
-                                    rhow10Pixel,
-                                    rhow11Pixel,
-                                    rhow12Pixel
+                            double[] olciReflPixels = {
+                                    r400Pixel,
+                                    r412Pixel,
+                                    r442Pixel,
+                                    r490Pixel,
+                                    r510Pixel,
+                                    r560Pixel,
+                                    r620Pixel,
+                                    r665Pixel,
+                                    r673Pixel,
+                                    r681Pixel,
+                                    r708Pixel,
+                                    r753Pixel
                             };
+
+                            double[] merisReflPixels = {
+                                    r412Pixel,
+                                    r442Pixel,
+                                    r490Pixel,
+                                    r510Pixel,
+                                    r560Pixel,
+                                    r620Pixel,
+                                    r665Pixel,
+                                    r681Pixel,
+                                    r708Pixel,
+                                    r753Pixel
+                            };
+
+                            double[] reflPixels = isOlci ? olciReflPixels : merisReflPixels;
 
                             for (int p = 0; p < reflPixels.length; p++) {
                                 photopocReflectance += constants[p] * reflPixels[p];
@@ -428,7 +488,7 @@ public class SnapCalculator {
 
                         //System.out.println(aPigRow[x] + " " + yellowSubsBand.scale(yellowSubsRow[x]) + " " + totalSuspBand.scale(totalSuspRow[x]));
                         //System.out.println(c490row[x]);
-                        //System.out.println(pixel3row[x] + " " + pixel5row[x] + " " + pixel9row[x]);
+                        //System.out.println(r442row[x] + " " + r510row[x] + " " + r673row[x]);
                         //System.out.println(kd490row[x]);
 
                         //kd490.writePixels(x, y, rasterWidth, 1, data);
